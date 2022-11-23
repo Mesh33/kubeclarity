@@ -140,6 +140,7 @@ func TestCLIScan(t *testing.T) {
 			// validate scan results were sent to the backend but
 			// no vuls were found
 			vuls := common.GetVulnerabilities(t, kubeclarityAPI, appID)
+			t.Logf("Got vul result: %#v", vuls)
 			assert.Assert(t, *vuls.Total == 0)
 
 			return ctx
