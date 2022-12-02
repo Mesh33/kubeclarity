@@ -266,6 +266,34 @@ registry:
 kubeclarity scan registry/nginx:private --config $HOME/own-kubeclarity-config
 ```
 
+### Analyzer output formats
+
+The kubeclarity-cli analyze command can format the resulting SBOM into
+different formats if required to integrate with another system. The supported
+formats are:
+
+| Format | Configuration Name |
+| --- | --- |
+| CycloneDX JSON (default) | cyclonedx-json |
+| CycloneDX XML | cyclonedx-xml |
+| SPDX JSON | spdx-json |
+| SPDX Tag Value | spdx-tv |
+| Syft JSON | syft-json |
+
+
+> ***WARNING***  
+> KubeClarity processes CycloneDX internally, the other formats are supported
+> through a conversion. The conversion process can be lossy due to
+> incompatibilities between formats, therefore not all fields/information are
+> promised to be present in the resulting output.
+
+To configure the kubeclarity-cli to use a format other than the default, the
+ANALYZER\_OUTPUT\_FORMAT environment variable can be used with the
+configuration name from above:
+```
+ANALYZER_OUTPUT_FORMAT="spdx-json" kubeclarity-cli analyze nginx:latest -o nginx.sbom
+```
+
 ### Export results to KubeClarity backend
 To export CLI results to the KubeClarity backend, need to use an application ID as defined by the KubeClarity backend.
 The application ID can be found in the Applications screen in the UI or using the KubeClarity API.
